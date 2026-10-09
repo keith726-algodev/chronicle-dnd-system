@@ -1,31 +1,37 @@
-# Your Project Name
+# Chronicle
 
-> **Replace this whole file.** It is a worked example of the README your project
-> will be graded from, not a file to leave as it is. Start with
-> [START-HERE.md](START-HERE.md).
+A personalized, branching campaign codex for Dungeon Masters who run homebrew worlds and need their notes to grow into the shape of the world, not a fixed template.
 
-One sentence saying what this does and who it is for.
-
-**Live site:** https://yourusername.github.io/your-repo-name/
-**API:** https://your-api.onrender.com/healthz
-**Demo video:** (link)
+**Live site:** https://github.com/keith726-algodev/chronicle-dnd-system
+**Demo video:** (link, see [docs/05-demo-video.md](docs/05-demo-video.md))
 
 > **This deployment is running in demo mode.** The interface is real; the backend
 > is simulated in your browser so the site works without a server. See
 > [Demo mode](#demo-mode) below. Delete this quote once your API is live.
 
-![A screenshot of the main screen](docs/assets/screenshot.png)
+![A screenshot of the Chronicle home screen](docs/assets/screenshot.png)
 
 ## What it does
 
-- Report a sighting with a place, a description and a spookiness rating
-- Browse everything reported, newest first
-- Delete a report
+- Build your own top-level categories (Orcs, Factions, Locations, whatever your world needs) that appear as tappable tiles, inspired by the "As I've Written" interface from Honkai: Star Rail
+- Open a tile to reveal its segments (for example Orcs: Classes, Culture and Rites, Notable NPCs), and add, rename or reorder them without ever losing the tile-and-branch navigation
+- Write notes freely inside each segment, and choose how they display: bullet, list or paragraph
+- Personalize appearance and library order from a settings screen
+- Light, restrained animation so it does not feel like a blank text editor
 
 ## Built with
 
-React and Vite on the front end, Express and PostgreSQL on the back end. The
-client is on GitHub Pages, the API on (host), the database on (host).
+React and Vite on the front end, Express and PostgreSQL on the back end. Styling is Tailwind CSS on top of CSS custom properties (design tokens). The client is on GitHub Pages, the API on (host), the database on (host).
+
+## Planning documents
+
+| Document | What it covers |
+| --- | --- |
+| [01-proposal.md](docs/01-proposal.md) | Purpose, audience, five screens, data ownership, one risk |
+| [02-mockup.md](docs/02-mockup.md) | Screen map, phone and desktop box sketches, component tree |
+| [03-design-system.md](docs/03-design-system.md) | Tokens, palette with contrast ratios, components, responsive and accessibility plan |
+| [04-weekly-reports.md](docs/04-weekly-reports.md) | Weekly progress |
+| [06-security-and-privacy.md](docs/06-security-and-privacy.md) | Security and privacy notes |
 
 ## Demo mode
 
@@ -38,24 +44,20 @@ notice rather than on a silently broken build.
 
 | `VITE_USE_MOCK_API` | What happens |
 | --- | --- |
-| unset, or `true` | The client answers its own requests from `localStorage`. No server, no database, nothing shared between visitors. This is what the template ships with, so the GitHub Pages link works on day one. |
+| unset, or `true` | The client answers its own requests from `localStorage`. No server, no database, nothing shared between visitors. |
 | `false` | The client calls the Express API at `VITE_API_BASE_URL`, which reads and writes real PostgreSQL. |
 
-**Demo mode is a starting point and a fallback, not a finished project.** Your
-finals submission is all three pieces deployed and talking to each other. Demo
-mode is there so you can build the interface in week one before the API exists,
-and so you have something to show if a free tier is asleep during your demo.
+Demo mode is a starting point and a fallback, not the finished project. The
+final version is the React client, the Express API and the PostgreSQL database,
+all deployed and talking to each other.
 
-GitHub Pages serves files and cannot run Node, so the API and the database can
-never live there. They go somewhere else:
+GitHub Pages serves files and cannot run Node, so the API and the database live
+elsewhere:
 
-| Piece | Options |
+| Piece | Host |
 | --- | --- |
-| **API** | Render, Railway, Fly.io, Koyeb, a VPS, or [self-hosted behind a tunnel](../content/extending-your-app/11-self-hosting.md) |
-| **Database** | Neon, Supabase, Railway, Aiven, or your own PostgreSQL |
-
-`content/extending-your-app/` in your course workspace walks through all of it.
-Page 10 is the decision page if you do not know which to pick.
+| **API** | (fill in: Render, Railway, Fly.io, ...) |
+| **Database** | (fill in: Neon, Supabase, Railway, ...) |
 
 ## Running it yourself
 
@@ -69,8 +71,8 @@ Page 10 is the decision page if you do not know which to pick.
 **The whole stack.** Needs a PostgreSQL, either local or hosted.
 
     # 1. the database
-    docker run --name my-pg -e POSTGRES_PASSWORD=devpassword \
-      -e POSTGRES_DB=haunted -p 5432:5432 -d postgres:17
+    docker run --name chronicle-pg -e POSTGRES_PASSWORD=isummonchronicle \
+      -e POSTGRES_DB=chronicle -p 5432:5432 -d postgres:17
 
     # 2. the API
     cd server
@@ -90,12 +92,11 @@ Check the API on its own before you blame the client:
 
     curl http://localhost:3000/healthz     # is the process alive
     curl http://localhost:3000/readyz      # is the database reachable
-    curl http://localhost:3000/api/sightings
+    curl http://localhost:3000/api/categories
 
 ## Environment variables
 
-None of these are committed. `.env.example` in each folder lists them with
-placeholder values.
+None of these are committed. `.env.example` lists them with placeholder values.
 
 | Name | Where | What it is |
 | --- | --- | --- |
@@ -111,22 +112,18 @@ Never put a key, a password or a connection string in one.
 
 ## Deploying
 
-**Client, to GitHub Pages.** Already wired up in
-`.github/workflows/deploy-pages.yml`. Two one-time steps:
+**Client, to GitHub Pages.** Wired up in `.github/workflows/deploy-pages.yml`.
 
-1. **Settings > Pages > Build and deployment > Source: GitHub Actions.** Without
-   this the workflow goes green and publishes nothing.
-2. Nothing else, until your API is live. Demo mode is the default, so the first
-   deploy works on its own. When the API is up, add `VITE_USE_MOCK_API` = `false`
-   and `VITE_API_BASE_URL` under **Settings > Secrets and variables > Actions >
+1. **Settings > Pages > Build and deployment > Source: GitHub Actions.**
+2. When the API is live, add `VITE_USE_MOCK_API` = `false` and
+   `VITE_API_BASE_URL` under **Settings > Secrets and variables > Actions >
    Variables**, then re-run the workflow.
 
 The repository must be **public** for Pages to serve it on a free account.
 
-**API and database.** Not automated here, because most hosts deploy straight from
-your repository with no workflow at all. Point your host at the `server/` folder,
-set the environment variables in its dashboard, and run `server/db/schema.sql`
-once against the hosted database.
+**API and database.** Point the host at the `server/` folder, set the
+environment variables in its dashboard, and run `server/db/schema.sql` once
+against the hosted database.
 
 ## Project structure
 
@@ -136,39 +133,32 @@ once against the hosted database.
     server/          Express API
       db/            pool, schema.sql, seed.sql, and a runner for them
     compose.yml      only if you self-host
-    docs/            your planning documents and weekly reports
+    docs/            planning documents and weekly reports
 
 ## Architecture
 
-Three or four sentences, or a small diagram. Which piece talks to which, and
-where each one is hosted.
+The React client talks to the Express API over HTTPS, and the API is the only
+thing that talks to PostgreSQL. The data model is a tree: a user's categories
+own segments, and each segment owns a note body plus its display mode. In demo
+mode the same client calls are answered from `localStorage` instead of the API.
+(Fill in the actual hosts once deployed.)
 
 ## What I would do next
 
-Three honest bullets. This paragraph is worth more than it looks.
+- Add search and tags so large libraries (15+ categories, 100+ segments) stay navigable. This is the main risk named in the proposal.
+- Add a light theme and more per-category icon and accent choices.
+- Add sharing or export so a DM can give players a read-only view of selected categories.
 
 ## Author
 
-Your name, and a link. Course and section.
+YOUR NAME, [github.com/YOUR-USERNAME](https://github.com/YOUR-USERNAME). Course and section: (fill in).
 
 ## AI use
 
-If you used AI while building this, say so here. Honest disclosure is the
-standard in this course and increasingly outside it, and reporting heavy use
-accurately costs you nothing.
-
-This section is the last 10 points of the finals badge, and it wants three
-things:
-
 ![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)
 
-- the badge above, or one you like better
-- a line naming which assistant you used and how much of the work it touched
-- a link to [AI-USAGE.md](AI-USAGE.md), where the full account lives
-
-Keep the detail in `AI-USAGE.md` rather than here. This section is the summary a
-visitor reads; that file is the record the badge is graded from.
+I used Claude (Anthropic) to help draft the planning documents (proposal, wireframes and component breakdown, design system) and this README. (Edit this line so it states accurately what Claude touched, and what code, if any, it wrote.) Full account: [AI-USAGE.md](AI-USAGE.md).
 
 ## Licence
 
-MIT, see [LICENSE](LICENSE). Put your own name in it.
+MIT, see [LICENSE](LICENSE).

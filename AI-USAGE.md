@@ -1,52 +1,47 @@
-# AI usage
+# AI use
 
-This project was built with AI assistance. This file is the record of it. It is
-graded as the finals badge, and it is worth 100 points.
+This is the full account the README's AI-use badge points to. Edit it to
+match what actually happened in your repository's history — this draft
+reflects the conversation that produced the first version of this code and
+needs your honest additions as you keep building.
 
-Start it in week 1 and keep it up as you go. The commit history of this file is
-part of the evidence: a file written all at once the night before the deadline
-looks exactly like what it is.
+## Assistant
 
-## 1. How I used AI
+Claude (Anthropic), used through claude.ai.
 
-At least six entries. One per real use. Every entry needs a commit link.
+## What it touched
 
-### YYYY-MM-DD - short title
+**Planning documents (`docs/01-proposal.md`, `02-mockup.md`, `03-design-system.md`):**
+Drafted close to end-to-end from a description of the app idea and the
+course rubrics. (Fill in: did you edit these afterward? How much?)
 
-- **Tool:**
-- **What I asked for:**
-- **What it gave back:**
-- **What I kept, what I changed, and why:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+**Client application code (`client/src/`):** Drafted close to end-to-end —
+the API abstraction (`src/api/mockApi.js`, `realApi.js`, `index.js`), every
+component in `src/components/`, the four screens in `src/screens/`, and the
+Tailwind config carrying the design-system tokens. (Fill in: what you
+changed, removed, or rewrote once you started working in it yourself.)
 
-## 2. Where the AI got it wrong
+**Server code (`server/src/`):** Drafted close to end-to-end — the Express
+app, the three route modules (categories, segments, settings), the schema,
+and the seed/reset scripts. (Fill in: whether you've modified the schema or
+routes since, and how.)
 
-Three cases. Be specific. If you write that the AI was never wrong, this section
-scores zero.
+**README.md:** Drafted from the course template, filled in with this
+project's specifics.
 
-### Case 1 - short title
+## What it did not touch
 
-- **What it gave me:**
-- **What was wrong with it:**
-- **What I did instead:**
-- **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
+(Fill this in as you build — anything you wrote yourself without asking the
+assistant, debugging you did on your own, deployment configuration you
+figured out by reading host docs instead of asking, etc. This list matters
+as much as the one above.)
 
-## 3. Who wrote what
+## Verification
 
-At least a fifth of this project is code you wrote yourself. Name it, and explain
-it in your own words.
-
-> Group projects: give each member their own heading below, and use your GitHub
-> handle as the heading. You are graded on your own section.
-
-### Written by me
-
-- **File:**
-- **Commit:**
-- **What it does and why it is built this way:**
-
-### The AI-written part I understand best
-
-- **File:**
-- **Commit:**
-- **What it does and why we kept it:**
+The assistant ran `npm install`, `npm run build`, and `eslint` on the client
+and `node --check` on every server file before handing the code over, so it
+is syntactically correct and the client builds. It was **not** run against
+a live PostgreSQL database or deployed to a real host at the time it was
+written — do that yourself, and note here what you had to fix to get it
+actually working end to end. That fix list is normal and expected, not a
+sign anything went wrong.

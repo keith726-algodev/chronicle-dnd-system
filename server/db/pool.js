@@ -1,3 +1,4 @@
+import "dotenv/config";
 import pg from 'pg'
 
 // Fail at boot with one clear line, rather than with a mystery 500 an hour

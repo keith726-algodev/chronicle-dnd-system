@@ -1,0 +1,19 @@
+<!doctype html>
+<!--
+  GitHub Pages serves this file for any unknown path. Chronicle uses
+  client-side routes (e.g. /categories/:id), so a hard refresh on a nested
+  route would otherwise 404. This redirects back to index.html, which then
+  lets react-router restore the correct route from the URL.
+  See: https://github.com/rafgraph/spa-github-pages
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chronicle</title>
+    <script>
+      sessionStorage.redirect = location.href;
+    </script>
+    <meta http-equiv="refresh" content="0;URL='/'" />
+  </head>
+  <body></body>
+</html>

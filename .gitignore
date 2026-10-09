@@ -1,21 +1,19 @@
-# Secrets. Never commit these.
-.env
-.env.*
-!.env.example
-
-# Dependencies and build output
+# Dependencies
 node_modules/
+
+# Build output
 dist/
-build/
+dist-ssr/
 
-# Database dumps: a full plain-text copy of your data
-*.dump
-backup*.sql
+# Environment files — never commit real secrets
+.env
+.env.local
+.env.*.local
 
-# Editor and OS noise
+# Editor/OS
 .DS_Store
-.vscode/
-.idea/
+.vscode/*
+!.vscode/extensions.json
 
 # Logs
 *.log

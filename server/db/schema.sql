@@ -1,20 +1,45 @@
--- The complete shape of the database. Safe to run against an empty database,
--- and safe to run twice.
---
--- This file is committed on purpose. Your schema is a fact about your
--- application, not a runtime concern: it should be readable by opening a file
--- rather than by connecting to a server. It is also what lets you move to a
--- hosted database in one command.
+-- Chronicle schema.
+-- Single-tenant on purpose: Chronicle is one DM's personal codex, not a
+-- multi-user product, so there is no users table. Add one later if that
+-- changes (see "What I would do next" in the README).
 
-CREATE TABLE IF NOT EXISTS sightings (
-  id          SERIAL PRIMARY KEY,
-  place       TEXT        NOT NULL,
-  description TEXT        NOT NULL DEFAULT '',
-  spookiness  INTEGER     NOT NULL CHECK (spookiness BETWEEN 1 AND 5),
-  reported_at TIMESTAMPTZ NOT NULL DEFAULT now()
+-- gen_random_uuid() is built into Postgres 13+. This extension is a no-op
+-- on hosts where it's already core, and a safety net on older images.
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+CREATE TABLE IF NOT EXISTS settings (
+  id                   SMALLINT PRIMARY KEY DEFAULT 1,
+  default_display_mode TEXT NOT NULL DEFAULT 'bullet'
+                         CHECK (default_display_mode IN ('bullet', 'list', 'paragraph')),
+  theme_accent         TEXT NOT NULL DEFAULT 'gold',
+  CONSTRAINT settings_singleton CHECK (id = 1)
 );
 
--- The list page always sorts newest first. Without this the database reads
--- every row and sorts it on each request.
-CREATE INDEX IF NOT EXISTS sightings_reported_at_idx
-  ON sightings (reported_at DESC);
+CREATE TABLE IF NOT EXISTS categories (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name          TEXT NOT NULL,
+  icon          TEXT NOT NULL DEFAULT 'book',
+  accent_color  TEXT NOT NULL DEFAULT '#9FD8FF',
+  order_index   INTEGER NOT NULL DEFAULT 0,
+  archived      BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS segments (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  category_id   UUID NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  title         TEXT NOT NULL,
+  display_mode  TEXT NOT NULL DEFAULT 'bullet'
+                 CHECK (display_mode IN ('bullet', 'list', 'paragraph')),
+  blocks        JSONB NOT NULL DEFAULT '[]'::jsonb,  -- array of strings, one per line/bullet
+  tags          JSONB NOT NULL DEFAULT '[]'::jsonb,  -- array of strings
+  order_index   INTEGER NOT NULL DEFAULT 0,
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS segments_category_id_idx ON segments(category_id);
+
+INSERT INTO settings (id, default_display_mode, theme_accent)
+VALUES (1, 'bullet', 'gold')
+ON CONFLICT (id) DO NOTHING;

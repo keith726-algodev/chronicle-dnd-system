@@ -3,8 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Final Project</title>
-    <meta name="description" content="Rename this, and write a real description. It is what a link preview shows." />
+    <title>Chronicle — a campaign codex</title>
+    <meta
+      name="description"
+      content="Chronicle: a personalized, branching note app for tabletop Dungeon Masters."
+    />
+    <!-- Pairs with public/404.html: restores the real path after GitHub
+         Pages redirects a nested-route refresh back to this file. -->
+    <script>
+      (function () {
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect !== location.href) {
+          history.replaceState(null, "", redirect.replace(location.origin, ""));
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
