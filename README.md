@@ -4,6 +4,7 @@ A personalized, branching campaign codex for Dungeon Masters who run homebrew wo
 
 **Live site:** https://github.com/keith726-algodev/chronicle-dnd-system
 **Demo video:** (link, see [docs/05-demo-video.md](docs/05-demo-video.md))
+**API:** https://ExpressAPI.onrender.com/healthz
 
 > **This deployment is running in demo mode.** The interface is real; the backend
 > is simulated in your browser so the site works without a server. See
@@ -56,8 +57,7 @@ elsewhere:
 
 | Piece | Host |
 | --- | --- |
-| **API** | (fill in: Render, Railway, Fly.io, ...) |
-| **Database** | (fill in: Neon, Supabase, Railway, ...) |
+| **Database** | (Docker Desktop) |
 
 ## Running it yourself
 
@@ -68,13 +68,13 @@ elsewhere:
     cp .env.example .env        # VITE_USE_MOCK_API stays true
     npm run dev                 # http://localhost:5173
 
-**The whole stack.** Needs a PostgreSQL, either local or hosted.
+**The whole stack.**
 
     # 1. the database
     docker run --name chronicle-pg -e POSTGRES_PASSWORD=isummonchronicle \
       -e POSTGRES_DB=chronicle -p 5432:5432 -d postgres:17
 
-    # 2. the API
+    # 2. the API (own terminal)
     cd server
     npm install
     cp .env.example .env        # check DATABASE_URL
@@ -151,13 +151,13 @@ mode the same client calls are answered from `localStorage` instead of the API.
 
 ## Author
 
-YOUR NAME, [github.com/YOUR-USERNAME](https://github.com/YOUR-USERNAME). Course and section: (fill in).
+Gatbonton, Keith Andre C., [github.com/keith726-algodev](https://github.com/keith726-algodev). Computer Science, CS-404.
 
 ## AI use
 
-![Built with AI assistance](https://img.shields.io/badge/built%20with-AI%20assistance-0b5fff)
+![Built with AI assistance](https://claude.ai/)
 
-I used Claude (Anthropic) to help draft the planning documents (proposal, wireframes and component breakdown, design system) and this README. (Edit this line so it states accurately what Claude touched, and what code, if any, it wrote.) Full account: [AI-USAGE.md](AI-USAGE.md).
+I used Claude (Anthropic) to help draft the planning documents (proposal, wireframes and component breakdown, design system), the system itself, the CSS, API, and client code. Full account: [AI-USAGE.md](AI-USAGE.md).
 
 ## Licence
 
