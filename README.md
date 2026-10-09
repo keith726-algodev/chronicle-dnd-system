@@ -3,7 +3,7 @@
 A personalized, branching campaign codex for Dungeon Masters who run homebrew worlds and need their notes to grow into the shape of the world, not a fixed template.
 
 **Live site:** https://github.com/keith726-algodev/chronicle-dnd-system
-**Demo video:** (link, see [docs/05-demo-video.md](docs/05-demo-video.md))
+**Demo video:** ((https://drive.google.com/drive/folders/1OIWHsoByRlub7HzymDD1j2zm64MzPE9m?usp=sharing), see [docs/05-demo-video.md](docs/05-demo-video.md))
 **API:** https://ExpressAPI.onrender.com/healthz
 
 > **This deployment is running in demo mode.** The interface is real; the backend
