@@ -6,10 +6,6 @@ A personalized, branching campaign codex for Dungeon Masters who run homebrew wo
 **Demo video:** ((https://drive.google.com/drive/folders/1OIWHsoByRlub7HzymDD1j2zm64MzPE9m?usp=sharing), see [docs/05-demo-video.md](docs/05-demo-video.md))
 **API:** https://ExpressAPI.onrender.com/healthz
 
-> **This deployment is running in demo mode.** The interface is real; the backend
-> is simulated in your browser so the site works without a server. See
-> [Demo mode](#demo-mode) below. Delete this quote once your API is live.
-
 ![A screenshot of the Chronicle home screen](docs/assets/home_screen.png)
 
 ## What it does
